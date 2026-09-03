@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Goa Casting — apparel creators for hire</title>
+<meta name="description" content="A curated board of creators available to model for apparel and merch brands. Based in Goa, shooting across India.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#000000;
+  --paper:#FFFFFF;
+  --stone:#F1F1EF;
+  --grey:#6B6B68;
+  --line:#DDDDD9;
+  --blue:#2B4CFF;
+  --display:"Syne",system-ui,sans-serif;
+  --body:"Karla",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.025em;line-height:1;margin:0}
+.wrap{max-width:1220px;margin:0 auto;padding:0 22px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+header{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:28px;height:68px}
+.logo{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.04em}
+.logo i{font-style:normal;color:var(--blue)}
+.nav{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:15px;font-weight:500}
+.nav a:hover{color:var(--blue)}
+.hire{margin-left:auto;background:var(--ink);color:var(--paper);border:0;padding:11px 20px;font-weight:600;font-size:15px}
+.hire:hover{background:var(--blue)}
+
+.intro{padding:60px 0 34px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:end}
+.intro h1{font-size:clamp(40px,5.6vw,72px)}
+.intro p{margin:22px 0 0;font-size:18px;max-width:44ch;color:#2C2C2A}
+.stats{display:flex;gap:34px;border-top:1px solid var(--line);padding-top:20px}
+.stats b{display:block;font-family:var(--display);font-size:30px;font-weight:700}
+.stats span{font-size:13px;color:var(--grey)}
+
+.controls{position:sticky;top:68px;z-index:20;background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0}
+.crow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:none;padding:8px 15px;border-radius:22px;font-size:14px;font-weight:500}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sel{margin-left:auto;display:flex;gap:10px;align-items:center}
+select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);background:var(--paper)}
+.found{font-size:14px;color:var(--grey);padding:16px 0 0}
+.warn{background:#FFF6D6;border:1px solid #E8D68A;padding:12px 16px;margin:18px 0 0;font-size:14px}
+
+.roster{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 20px;padding:18px 0 90px}
+.talent{position:relative;display:flex;flex-direction:column}
+.open{text-align:left;background:none;border:0;padding:0;display:flex;flex-direction:column}
+.shot{position:relative;aspect-ratio:4/5;background:var(--stone);background-size:cover;background-position:center;overflow:hidden;display:block}
+.shot .ph{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:44px;font-weight:700;color:#fff;letter-spacing:-.03em}
+.open:hover .shot{filter:brightness(.94)}
+.avail{position:absolute;top:10px;left:10px;background:var(--paper);font-size:11px;font-weight:600;padding:4px 9px}
+.avail.no{color:var(--grey)}
+.avail.yes::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#0E9F5A;margin-right:6px;vertical-align:middle}
+.talent h3{font-size:19px;margin:13px 0 0}
+.talent .where{font-size:13.5px;color:var(--grey);margin:4px 0 0}
+.reach{display:flex;gap:12px;margin:10px 0 0;font-size:13px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:11px 0 0}
+.tag{font-size:12px;border:1px solid var(--line);padding:3px 9px;color:var(--grey)}
+.pick{margin-top:12px;border:1px solid var(--ink);background:var(--paper);padding:9px 0;font-size:14px;font-weight:600;width:100%}
+.pick:hover{background:var(--stone)}
+.pick[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+.skeleton{background:var(--stone);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.55}}
+
+.brands{background:var(--stone);padding:60px 0}
+.brands h2{font-size:38px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:34px;counter-reset:s}
+.step{counter-increment:s}
+.step::before{content:counter(s);font-family:var(--display);font-size:15px;font-weight:700;display:grid;place-items:center;width:30px;height:30px;background:var(--ink);color:var(--paper);margin-bottom:14px}
+.step h3{font-size:19px}
+.step p{margin:8px 0 0;font-size:15px;color:#3A3A38}
+
+footer{padding:44px 0 100px;font-size:14px;color:var(--grey)}
+.fg{display:flex;gap:34px;flex-wrap:wrap;align-items:flex-start}
+footer a:hover{color:var(--ink)}
+.fnote{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px}
+
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--ink);color:var(--paper);transform:translateY(100%);transition:transform .22s ease}
+.dock.on{transform:none}
+.dock .wrap{display:flex;align-items:center;gap:16px;padding:14px 22px;flex-wrap:wrap}
+.dock b{font-family:var(--display);font-size:17px;font-weight:700}
+.dock .names{font-size:14px;color:#B9B9B4;flex:1;min-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dock button{border:1px solid var(--paper);background:none;color:var(--paper);padding:10px 18px;font-weight:600;font-size:14px}
+.dock button.go{background:var(--paper);color:var(--ink)}
+.dock button.go:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .18s;z-index:50}
+.scrim.on{opacity:1;visibility:visible}
+.sheet{position:fixed;z-index:60;inset:auto 0 0 0;max-height:92vh;overflow-y:auto;background:var(--paper);transform:translateY(100%);transition:transform .24s ease}
+.sheet.on{transform:translateY(0)}
+@media (min-width:820px){
+  .sheet{inset:50% auto auto 50%;transform:translate(-50%,-46%);opacity:0;width:min(880px,92vw);max-height:88vh;transition:opacity .18s,transform .18s}
+  .sheet.on{transform:translate(-50%,-50%);opacity:1}
+}
+.sclose{position:absolute;top:14px;right:14px;background:var(--paper);border:1px solid var(--line);width:36px;height:36px;font-size:20px;line-height:1;z-index:2}
+.sbody{display:grid;grid-template-columns:1fr 1.25fr}
+.sbody .shot{aspect-ratio:4/5}
+.sinfo{padding:30px 32px 32px}
+.sinfo h2{font-size:34px}
+.sinfo .where{color:var(--grey);margin:6px 0 0;font-size:15px}
+.sinfo .bio{margin:18px 0 0;font-size:15.5px}
+.numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:22px 0 0}
+.numbers div{background:var(--paper);padding:13px 14px}
+.numbers b{display:block;font-family:var(--display);font-size:21px;font-weight:700}
+.numbers span{font-size:12.5px;color:var(--grey)}
+.links{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0 0}
+.links a{border:1px solid var(--line);padding:8px 14px;font-size:14px;font-weight:500}
+.links a:hover{border-color:var(--ink)}
+.rate{margin:22px 0 0;padding:14px 16px;background:var(--stone);font-size:14.5px}
+.rate b{font-family:var(--display);font-size:19px;font-weight:700;display:block;margin-top:3px}
+.book{display:flex;gap:10px;margin:20px 0 0;flex-wrap:wrap}
+.book a,.book button{padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--ink);background:none}
+.primary{background:var(--ink);color:var(--paper)}
+.primary:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.secondary:hover{background:var(--stone)}
+
+.panel{padding:28px 32px 32px}
+.panel h2{font-size:30px}
+.panel .lede{color:var(--grey);font-size:14.5px;margin:8px 0 0}
+.slist{margin:22px 0 0;border-top:1px solid var(--line)}
+.srow{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.srow .mini{width:46px;height:56px;background-size:cover;background-position:center;flex:0 0 auto;display:grid;place-items:center;font-family:var(--display);font-weight:700;color:#fff;font-size:15px}
+.srow h4{margin:0;font-family:var(--display);font-size:16px;font-weight:700}
+.srow small{color:var(--grey);font-size:13px}
+.srow .drop{margin-left:auto;background:none;border:0;color:var(--grey);font-size:13px;text-decoration:underline}
+.copied{font-size:13px;color:#0E9F5A;font-weight:600;margin:12px 0 0;min-height:18px}
+
+@media (max-width:1000px){
+  .roster{grid-template-columns:repeat(2,1fr)}
+  .intro{grid-template-columns:1fr;gap:30px}
+  .steps{grid-template-columns:1fr}
+  .nav{display:none}
+  .sbody{grid-template-columns:1fr}
+  .sbody .shot{aspect-ratio:16/10}
+}
+@media (max-width:560px){
+  .roster{grid-template-columns:1fr 1fr;gap:20px 14px}
+  .sel{margin-left:0;width:100%}
+  .dock .names{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a href="#" class="logo">Goa<i>Casting</i></a>
+    <ul class="nav">
+      <li><a href="#roster">Talent</a></li>
+      <li><a href="#brands">For brands</a></li>
+      <li><a href="#apply">Join the board</a></li>
+    </ul>
+    <button class="hire" type="button" id="topHire">Book talent</button>
+  </div>
+</header>
+
+<main>
+<section class="wrap intro">
+  <div>
+    <h1> Hottie Escorts In Goa Russian Indian Blonde Brunette Redhead</h1>
+    <p> Meet Baddies in Panjim, Anjuna, Arambol, Porvorim, North and South Goa!! Discrete Service| In-Calls and Out-Calls All Across Goa| Shortlist the ones you want and send us one enquiry.</p>
+  </div>
+  <div class="stats">
+    <div><b id="nTalent">—</b><span>creators listed</span></div>
+    <div><b id="nReach">—</b><span>combined followers</span></div>
+    <div><b>48h</b><span>to confirm a booking</span></div>
+  </div>
+</section>
+
+<div class="controls">
+  <div class="wrap crow">
+    <button class="chip" type="button" aria-pressed="true" data-cat="all">Everyone</button>
+    <button class="chip" type="button" aria-pressed="false" data-cat="streetwear">Streetwear</button>
+    <button class="chip" type="button" aria-pressed="false" data-cat="fitness">Fitness</button>
+    <button class="chip" type="button" aria-pressed="false" data-cat="anime">Anime &amp; cosplay</button>
+    <button class="chip" type="button" aria-pressed="false" data-cat="campus">Campus</button>
+    <button class="chip" type="button" aria-pressed="false" data-cat="lifestyle">Lifestyle</button>
+    <div class="sel">
+      <label class="sr" for="city">City</label>
+      <select id="city"><option value="all">All cities</option></select>
+      <label class="sr" for="sort">Sort</label>
+      <select id="sort">
+        <option value="reach">Most followers</option>
+        <option value="name">Name A–Z</option>
+        <option value="free">Available first</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div id="notice"></div>
+  <p class="found" id="found">Loading the board…</p>
+  <div class="roster" id="roster"></div>
+</div>
+
+<section class="brands" id="brands">
+  <div class="wrap">
+    <h2>How a booking works</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Shortlist your faces</h3>
+        <p>Tick the creators you want. Most brands shortlist three or four for a single drop, then we narrow it together.</p>
+      </div>
+      <div class="step">
+        <h3>Send us the brief</h3>
+        <p>Product, shoot date, city, how many looks, and what usage rights you need. We come back with a quote within a day.</p>
+      </div>
+      <div class="step">
+        <h3>Ship the product, get the shoot</h3>
+        <p>You courier the garments. We handle the creator, the schedule and delivery of the final files.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="apply" style="padding:60px 0">
+  <h2 style="font-size:34px">Creators — get on the board</h2>
+  <p style="max-width:56ch;margin-top:16px;font-size:16.5px">We add a limited number of creators each month. Send your handle, city, sizes you fit, and two recent shots. If it's a fit, we'll list you and bring you paid apparel work.</p>
+  <div class="book">
+    <a class="primary" id="applyMail" href="#">Email your profile</a>
+    <a class="secondary" id="applyWa" href="#" target="_blank" rel="noopener">Message on WhatsApp</a>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <div class="fg">
+    <div style="min-width:220px">
+      <span class="logo">Goa<i>Casting</i></span>
+      <p style="margin-top:10px;max-width:30ch">Creator casting for apparel and merch brands. Based in Goa, shooting across India.</p>
+    </div>
+    <div><a href="#roster">Talent</a></div>
+    <div><a href="#brands">For brands</a></div>
+    <div><a href="#apply">Join the board</a></div>
+    <div><a id="footMail" href="#">Email us</a></div>
+  </div>
+  <p class="fnote">Demo site. Listed creators have agreed to appear here; fees are indicative and confirmed per booking.</p>
+</footer>
+
+<div class="dock" id="dock">
+  <div class="wrap">
+    <b><span id="dockN">0</span> shortlisted</b>
+    <span class="names" id="dockNames"></span>
+    <button type="button" id="dockClear">Clear</button>
+    <button type="button" class="go" id="dockOpen">Review &amp; enquire</button>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden="true">
+  <button class="sclose" type="button" id="sclose" aria-label="Close">&times;</button>
+  <div id="sheetBody"></div>
+</aside>
+
+<script>
+/* ==================================================================
+   1. SETTINGS — the only lines you normally touch
+   ================================================================== */
+
+// Your Google Sheet, published to the web as CSV. Setup steps are in the notes.
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSxe9Qry8kwGg6JW6ZwfJFYc86PsvUaEb5tmIF-V1GJnCzDGSX9T_78Faf26zp--EyP9hZcC8f6PMZ9/pub?output=csv";   // paste the published CSV link here
+
+const WHATSAPP = "+918368325945";              // your number, country code, no +
+const EMAIL    = "foothoopventures@gmail.com";      // where enquiries land
+
+// Shown only if the sheet is missing or unreachable, so the site is never blank.
+const FALLBACK = [
+  {name:"Ananya Rao", city:"Bengaluru", cats:["streetwear","lifestyle"], photo:"",
+   bio:"Shoots oversized fits and campus streetwear. Comfortable on camera, quick turnaround on reels.",
+   socials:{instagram:"ananyarao", youtube:""}, reach:{instagram:84000, youtube:0},
+   sizes:"Tops M · Bottoms 28", rate:"₹12,000 – ₹18,000 per shoot day", available:true},
+  {name:"Kabir Sethi", city:"Delhi", cats:["streetwear","fitness"], photo:"",
+   bio:"Gym and streetwear crossover. Strong with fitted tees and hoodies.",
+   socials:{instagram:"kabirlifts", youtube:"kabirlifts"}, reach:{instagram:156000, youtube:41000},
+   sizes:"Tops L · Bottoms 32", rate:"₹20,000 – ₹30,000 per shoot day", available:true},
+  {name:"Meher Qureshi", city:"Mumbai", cats:["anime","lifestyle"], photo:"",
+   bio:"Cosplay and anime merch. Builds her own props and shoots in studio.",
+   socials:{instagram:"meherq.cos", youtube:"meherqcosplay"}, reach:{instagram:62000, youtube:88000},
+   sizes:"Tops S · Bottoms 26", rate:"₹15,000 – ₹22,000 per shoot day", available:false},
+  {name:"Rishi Menon", city:"Chennai", cats:["campus","streetwear"], photo:"",
+   bio:"Final-year student with a big campus following. Best fit for college merch and fest collections.",
+   socials:{instagram:"rishiontape", youtube:""}, reach:{instagram:38000, youtube:0},
+   sizes:"Tops M · Bottoms 30", rate:"₹8,000 – ₹12,000 per shoot day", available:true},
+  {name:"Simran Kaur", city:"Chandigarh", cats:["lifestyle","streetwear"], photo:"",
+   bio:"Everyday styling content. Good at making a plain tee look like an outfit.",
+   socials:{instagram:"simrankstyles", youtube:""}, reach:{instagram:121000, youtube:0},
+   sizes:"Tops M · Bottoms 28", rate:"₹18,000 – ₹25,000 per shoot day", available:true},
+  {name:"Dev Bhattacharya", city:"Kolkata", cats:["anime","campus"], photo:"",
+   bio:"Anime reviews and merch hauls. His audience buys printed tees.",
+   socials:{instagram:"devwatchesanime", youtube:"devwatchesanime"}, reach:{instagram:47000, youtube:210000},
+   sizes:"Tops L · Bottoms 34", rate:"₹22,000 – ₹32,000 per shoot day", available:true}
+];
+
+/* ==================================================================
+   2. Loading the sheet
+   ================================================================== */
+
+/* Minimal CSV parser. Handles quoted fields containing commas, escaped
+   quotes and line breaks — a plain split(",") mangles all three. */
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = "", quoted = false;
+  text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  for(let i = 0; i < text.length; i++){
+    const ch = text[i];
+    if(quoted){
+      if(ch === '"'){
+        if(text[i + 1] === '"'){ field += '"'; i++; }   // "" means a literal quote
+        else quoted = false;
+      } else field += ch;
+    }
+    else if(ch === '"') quoted = true;
+    else if(ch === ","){ row.push(field); field = ""; }
+    else if(ch === "\n"){ row.push(field); rows.push(row); row = []; field = ""; }
+    else field += ch;
+  }
+  if(field !== "" || row.length){ row.push(field); rows.push(row); }
+  return rows;
+}
+
+const num = v => Number(String(v || "").replace(/[^0-9]/g, "")) || 0;
+const yes = v => /^(y|yes|true|1|available)$/i.test(String(v || "").trim());
+
+function rowsToCreators(rows){
+  if(rows.length < 2) return [];
+  const head = rows[0].map(h => h.trim().toLowerCase().replace(/\s+/g, "_"));
+  const at = (r, key) => {
+    const i = head.indexOf(key);
+    return i === -1 ? "" : (r[i] || "").trim();
+  };
+
+  return rows.slice(1)
+    .filter(r => at(r, "name"))                       // skip blank rows
+    .map(r => ({
+      name: at(r, "name"),
+      city: at(r, "city"),
+      cats: at(r, "categories").split(/[;,]/).map(s => s.trim().toLowerCase()).filter(Boolean),
+      photo: at(r, "photo"),
+      bio: at(r, "bio"),
+      sizes: at(r, "sizes"),
+      rate: at(r, "rate"),
+      available: yes(at(r, "available")),
+      socials: {
+        instagram: at(r, "instagram").replace(/^@/, ""),
+        youtube: at(r, "youtube").replace(/^@/, "")
+      },
+      reach: {
+        instagram: num(at(r, "instagram_followers")),
+        youtube: num(at(r, "youtube_followers"))
+      }
+    }));
+}
+
+let CREATORS = [];
+
+async function load(){
+  if(!SHEET_CSV_URL){
+    CREATORS = FALLBACK;
+    notice("No sheet connected yet, so these are sample creators. Paste your published CSV link into SHEET_CSV_URL near the top of the script.");
+    return;
+  }
+  try{
+    const res = await fetch(SHEET_CSV_URL, {cache: "no-store"});
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    const parsed = rowsToCreators(parseCSV(await res.text()));
+    if(!parsed.length) throw new Error("no rows with a name");
+    CREATORS = parsed;
+  }catch(err){
+    CREATORS = FALLBACK;
+    notice("Couldn't reach the sheet just now, so this is the sample list. Check that the sheet is still published to the web.");
+    console.error("Sheet load failed:", err);
+  }
+}
+
+function notice(msg){
+  document.getElementById("notice").innerHTML = '<p class="warn">' + msg + '</p>';
+}
+
+/* ==================================================================
+   3. Rendering
+   ================================================================== */
+
+const TINTS = ["#2B4CFF","#0E9F5A","#D94F2B","#7A3FBF","#0F8F9E","#C2185B","#5B6B21","#374151"];
+const slug = n => n.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const initials = n => n.split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+const totalReach = c => (c.reach.instagram || 0) + (c.reach.youtube || 0);
+const short = n => n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, "") + "M"
+                 : n >= 1e3 ? Math.round(n / 1e3) + "K" : String(n);
+const tintOf = c => TINTS[[...slug(c.name)].reduce((a, ch) => a + ch.charCodeAt(0), 0) % TINTS.length];
+const shotStyle = c => c.photo ? `background-image:url('${c.photo}')` : `background:${tintOf(c)}`;
+const shotInner = c => c.photo ? "" : `<span class="ph">${initials(c.name)}</span>`;
+const byId = id => CREATORS.find(c => slug(c.name) === id);
+
+let cat = "all", cityF = "all", sortBy = "reach";
+const shortlist = new Set();
+const roster = document.getElementById("roster");
+
+function visible(){
+  const list = CREATORS.filter(c =>
+    (cat === "all" || c.cats.includes(cat)) &&
+    (cityF === "all" || c.city === cityF));
+  if(sortBy === "reach") list.sort((a, b) => totalReach(b) - totalReach(a));
+  if(sortBy === "name")  list.sort((a, b) => a.name.localeCompare(b.name));
+  if(sortBy === "free")  list.sort((a, b) => (b.available - a.available) || totalReach(b) - totalReach(a));
+  return list;
+}
+
+function draw(){
+  const list = visible();
+  roster.textContent = "";
+  document.getElementById("found").textContent =
+    list.length === 0 ? "No one matches that yet — try another category or city."
+                      : list.length + (list.length > 1 ? " creators" : " creator");
+
+  list.forEach(c => {
+    const id = slug(c.name);
+    const on = shortlist.has(id);
+    const el = document.createElement("article");
+    el.className = "talent";
+    el.innerHTML = `
+      <button class="open" type="button" aria-haspopup="dialog">
+        <span class="shot" style="${shotStyle(c)}">
+          ${shotInner(c)}
+          <span class="avail ${c.available ? "yes" : "no"}">${c.available ? "Available" : "Booked"}</span>
+        </span>
+        <h3>${c.name}</h3>
+        <p class="where">${c.city}</p>
+        <span class="reach">
+          ${c.socials.instagram ? `<span>IG ${short(c.reach.instagram)}</span>` : ""}
+          ${c.socials.youtube ? `<span>YT ${short(c.reach.youtube)}</span>` : ""}
+        </span>
+        <span class="tags">${c.cats.map(t => `<span class="tag">${t}</span>`).join("")}</span>
+      </button>
+      <button class="pick" type="button" aria-pressed="${on}">${on ? "✓ Shortlisted" : "Add to shortlist"}</button>`;
+    el.querySelector(".open").addEventListener("click", () => openProfile(id));
+    el.querySelector(".pick").addEventListener("click", () => toggle(id));
+    roster.appendChild(el);
+  });
+
+  document.getElementById("nTalent").textContent = CREATORS.length;
+  document.getElementById("nReach").textContent = short(CREATORS.reduce((n, c) => n + totalReach(c), 0));
+}
+
+document.querySelector(".crow").addEventListener("click", e => {
+  const chip = e.target.closest(".chip");
+  if(!chip) return;
+  cat = chip.dataset.cat;
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === chip));
+  draw();
+});
+document.getElementById("city").addEventListener("change", e => { cityF = e.target.value; draw(); });
+document.getElementById("sort").addEventListener("change", e => { sortBy = e.target.value; draw(); });
+
+function buildCityList(){
+  const sel = document.getElementById("city");
+  [...new Set(CREATORS.map(c => c.city).filter(Boolean))].sort().forEach(city => {
+    const o = document.createElement("option");
+    o.value = city;
+    o.textContent = city;
+    sel.appendChild(o);
+  });
+}
+
+/* ==================================================================
+   4. Shortlist — state lives in the URL, so the link is shareable
+      and survives a refresh with no storage involved
+   ================================================================== */
+
+function syncURL(){
+  const url = new URL(location.href);
+  shortlist.size ? url.searchParams.set("list", [...shortlist].join(","))
+                 : url.searchParams.delete("list");
+  history.replaceState(null, "", url);
+}
+
+function readURL(){
+  const raw = new URL(location.href).searchParams.get("list");
+  if(!raw) return;
+  raw.split(",").filter(id => byId(id)).forEach(id => shortlist.add(id));
+}
+
+function toggle(id){
+  shortlist.has(id) ? shortlist.delete(id) : shortlist.add(id);
+  syncURL();
+  draw();
+  paintDock();
+  if(sheet.classList.contains("on")){
+    sheet.dataset.view === "profile" ? openProfile(id)
+      : shortlist.size ? openShortlist() : closeSheet();
+  }
+}
+
+const dock = document.getElementById("dock");
+function paintDock(){
+  const names = [...shortlist].map(id => byId(id) && byId(id).name).filter(Boolean);
+  dock.classList.toggle("on", names.length > 0);
+  document.getElementById("dockN").textContent = names.length;
+  document.getElementById("dockNames").textContent = names.join(", ");
+}
+document.getElementById("dockClear").addEventListener("click", () => {
+  shortlist.clear(); syncURL(); draw(); paintDock();
+  if(sheet.classList.contains("on") && sheet.dataset.view === "shortlist") closeSheet();
+});
+document.getElementById("dockOpen").addEventListener("click", openShortlist);
+
+/* ==================================================================
+   5. Enquiry messages
+   ================================================================== */
+
+function enquiryText(list){
+  const who = list.map(c => `• ${c.name} (@${c.socials.instagram || "handle on site"}, ${c.city})`).join("\n");
+  return `Hi, I'd like to book the following creator${list.length > 1 ? "s" : ""} for an apparel shoot:\n\n${who}\n\nProduct: \nShoot date: \nCity: \nNumber of looks: \nUsage rights needed: `;
+}
+const waLink   = txt => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(txt)}`;
+const mailLink = (subj, txt) => `mailto:${EMAIL}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(txt)}`;
+
+/* ==================================================================
+   6. Modal — used for a single profile and for the shortlist
+   ================================================================== */
+
+const sheet = document.getElementById("sheet");
+const scrim = document.getElementById("scrim");
+const sheetBody = document.getElementById("sheetBody");
+let lastFocus = null;
+
+function showSheet(view, html){
+  if(!sheet.classList.contains("on")) lastFocus = document.activeElement;
+  sheet.dataset.view = view;
+  sheetBody.innerHTML = html;
+  sheet.classList.add("on");
+  scrim.classList.add("on");
+  sheet.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  document.getElementById("sclose").focus();
+}
+function closeSheet(){
+  sheet.classList.remove("on");
+  scrim.classList.remove("on");
+  sheet.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  if(lastFocus) lastFocus.focus();
+}
+document.getElementById("sclose").addEventListener("click", closeSheet);
+scrim.addEventListener("click", closeSheet);
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape" && sheet.classList.contains("on")) closeSheet();
+});
+
+function openProfile(id){
+  const c = byId(id);
+  if(!c) return;
+  const on = shortlist.has(id);
+  showSheet("profile", `
+    <div class="sbody">
+      <div class="shot" style="${shotStyle(c)}">${shotInner(c)}</div>
+      <div class="sinfo">
+        <h2 id="sheetTitle">${c.name}</h2>
+        <p class="where">${c.city}${c.sizes ? " · " + c.sizes : ""} · ${c.available ? "Available now" : "Booked this month"}</p>
+        ${c.bio ? `<p class="bio">${c.bio}</p>` : ""}
+        <div class="numbers">
+          <div><b>${short(totalReach(c))}</b><span>total followers</span></div>
+          ${c.socials.instagram ? `<div><b>${short(c.reach.instagram)}</b><span>Instagram</span></div>` : ""}
+          ${c.socials.youtube ? `<div><b>${short(c.reach.youtube)}</b><span>YouTube</span></div>` : ""}
+        </div>
+        <div class="links">
+          ${c.socials.instagram ? `<a href="https://instagram.com/${c.socials.instagram}" target="_blank" rel="noopener">@${c.socials.instagram} on Instagram</a>` : ""}
+          ${c.socials.youtube ? `<a href="https://youtube.com/@${c.socials.youtube}" target="_blank" rel="noopener">YouTube channel</a>` : ""}
+        </div>
+        ${c.rate ? `<div class="rate">Indicative fee<b>${c.rate}</b></div>` : ""}
+        <div class="book">
+          <button type="button" class="${on ? "secondary" : "primary"}" id="sheetPick">
+            ${on ? "Remove from shortlist" : "Add to shortlist"}
+          </button>
+          <a class="secondary" href="${waLink(enquiryText([c]))}" target="_blank" rel="noopener">Enquire about ${c.name.split(" ")[0]}</a>
+        </div>
+      </div>
+    </div>`);
+  document.getElementById("sheetPick").addEventListener("click", () => toggle(id));
+}
+
+function openShortlist(){
+  const list = [...shortlist].map(byId).filter(Boolean);
+  if(!list.length) return;
+  const txt = enquiryText(list);
+  showSheet("shortlist", `
+    <div class="panel">
+      <h2 id="sheetTitle">Your shortlist</h2>
+      <p class="lede">${list.length} creator${list.length > 1 ? "s" : ""}. Send it over and we'll come back with availability and a quote within a day.</p>
+      <div class="slist">
+        ${list.map(c => `
+          <div class="srow" data-id="${slug(c.name)}">
+            <div class="mini" style="${shotStyle(c)}">${c.photo ? "" : initials(c.name)}</div>
+            <div>
+              <h4>${c.name}</h4>
+              <small>${c.city}${c.socials.instagram ? " · @" + c.socials.instagram : ""} · ${short(totalReach(c))} followers</small>
+            </div>
+            <button class="drop" type="button">Remove</button>
+          </div>`).join("")}
+      </div>
+      <div class="book">
+        <a class="primary" href="${waLink(txt)}" target="_blank" rel="noopener">Send on WhatsApp</a>
+        <a class="secondary" href="${mailLink("Booking enquiry — " + list.length + " creator" + (list.length > 1 ? "s" : ""), txt)}">Send by email</a>
+        <button class="secondary" type="button" id="copyLink">Copy shortlist link</button>
+      </div>
+      <p class="copied" id="copied"></p>
+    </div>`);
+
+  sheetBody.querySelectorAll(".drop").forEach(b =>
+    b.addEventListener("click", () => toggle(b.closest(".srow").dataset.id)));
+
+  document.getElementById("copyLink").addEventListener("click", async () => {
+    const msg = document.getElementById("copied");
+    try{
+      await navigator.clipboard.writeText(location.href);
+      msg.textContent = "Link copied. Anyone who opens it sees this same shortlist.";
+    }catch{
+      msg.textContent = "Copy the link from your address bar to share this shortlist.";
+    }
+  });
+}
+
+/* ==================================================================
+   7. Boot
+   ================================================================== */
+
+document.getElementById("topHire").addEventListener("click", () => {
+  shortlist.size ? openShortlist()
+    : window.open(waLink("Hi, I'm looking to book creators for an apparel shoot."), "_blank", "noopener");
+});
+document.getElementById("applyMail").href = mailLink("Creator application", "Handle:\nCity:\nSizes:\nLinks to recent work:\n");
+document.getElementById("applyWa").href = waLink("Hi, I'd like to join the board.");
+document.getElementById("footMail").href = mailLink("Hello", "");
+
+roster.innerHTML = Array.from({length: 8}, () =>
+  '<article class="talent"><div class="shot skeleton"></div></article>').join("");
+
+load().then(() => {
+  readURL();
+  buildCityList();
+  draw();
+  paintDock();
+});
+</script>
+</body>
+</html>
