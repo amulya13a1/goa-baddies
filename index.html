@@ -10,12 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#000000;
-  --paper:#FFFFFF;
-  --stone:#F1F1EF;
-  --grey:#6B6B68;
-  --line:#DDDDD9;
-  --blue:#2B4CFF;
+  --ink:#2A1A16;        /* warm brown-black, sits under the red */
+  --paper:#FFFFFF;      /* keep photos on clean white */
+  --stone:#F0EBE4;      /* lime-plaster bone, for bands and panels */
+  --grey:#7A6A64;
+  --line:#E2D9CE;
+  --accent:#C1440E;     /* laterite — primary buttons, dock, active chips */
+  --green:#1F5F52;      /* sea green — availability, confirmed states */
   --display:"Syne",system-ui,sans-serif;
   --body:"Karla",system-ui,sans-serif;
 }
@@ -23,7 +24,7 @@
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
 button{font:inherit;color:inherit;cursor:pointer}
 a{color:inherit;text-decoration:none}
-:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.025em;line-height:1;margin:0}
 .wrap{max-width:1220px;margin:0 auto;padding:0 22px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -31,11 +32,11 @@ h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.025em;line-
 header{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1px solid var(--line)}
 .bar{display:flex;align-items:center;gap:28px;height:68px}
 .logo{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.04em}
-.logo i{font-style:normal;color:var(--blue)}
+.logo i{font-style:normal;color:var(--accent)}
 .nav{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:15px;font-weight:500}
-.nav a:hover{color:var(--blue)}
+.nav a:hover{color:var(--accent)}
 .hire{margin-left:auto;background:var(--ink);color:var(--paper);border:0;padding:11px 20px;font-weight:600;font-size:15px}
-.hire:hover{background:var(--blue)}
+.hire:hover{background:var(--accent)}
 
 .intro{padding:60px 0 34px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:end}
 .intro h1{font-size:clamp(40px,5.6vw,72px)}
@@ -48,7 +49,7 @@ header{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1p
 .crow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .chip{border:1px solid var(--line);background:none;padding:8px 15px;border-radius:22px;font-size:14px;font-weight:500}
 .chip:hover{border-color:var(--ink)}
-.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
 .sel{margin-left:auto;display:flex;gap:10px;align-items:center}
 select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);background:var(--paper)}
 .found{font-size:14px;color:var(--grey);padding:16px 0 0}
@@ -62,7 +63,7 @@ select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line)
 .open:hover .shot{filter:brightness(.94)}
 .avail{position:absolute;top:10px;left:10px;background:var(--paper);font-size:11px;font-weight:600;padding:4px 9px}
 .avail.no{color:var(--grey)}
-.avail.yes::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#0E9F5A;margin-right:6px;vertical-align:middle}
+.avail.yes::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px;vertical-align:middle}
 .talent h3{font-size:19px;margin:13px 0 0}
 .talent .where{font-size:13.5px;color:var(--grey);margin:4px 0 0}
 .reach{display:flex;gap:12px;margin:10px 0 0;font-size:13px}
@@ -70,7 +71,7 @@ select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line)
 .tag{font-size:12px;border:1px solid var(--line);padding:3px 9px;color:var(--grey)}
 .pick{margin-top:12px;border:1px solid var(--ink);background:var(--paper);padding:9px 0;font-size:14px;font-weight:600;width:100%}
 .pick:hover{background:var(--stone)}
-.pick[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.pick[aria-pressed="true"]{background:var(--green);color:var(--paper);border-color:var(--green)}
 
 .skeleton{background:var(--stone);animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.55}}
@@ -79,7 +80,7 @@ select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line)
 .brands h2{font-size:38px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:34px;counter-reset:s}
 .step{counter-increment:s}
-.step::before{content:counter(s);font-family:var(--display);font-size:15px;font-weight:700;display:grid;place-items:center;width:30px;height:30px;background:var(--ink);color:var(--paper);margin-bottom:14px}
+.step::before{content:counter(s);font-family:var(--display);font-size:15px;font-weight:700;display:grid;place-items:center;width:30px;height:30px;background:var(--accent);color:var(--paper);margin-bottom:14px}
 .step h3{font-size:19px}
 .step p{margin:8px 0 0;font-size:15px;color:#3A3A38}
 
@@ -88,16 +89,16 @@ footer{padding:44px 0 100px;font-size:14px;color:var(--grey)}
 footer a:hover{color:var(--ink)}
 .fnote{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px}
 
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--ink);color:var(--paper);transform:translateY(100%);transition:transform .22s ease}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--accent);color:var(--paper);transform:translateY(100%);transition:transform .22s ease}
 .dock.on{transform:none}
 .dock .wrap{display:flex;align-items:center;gap:16px;padding:14px 22px;flex-wrap:wrap}
 .dock b{font-family:var(--display);font-size:17px;font-weight:700}
-.dock .names{font-size:14px;color:#B9B9B4;flex:1;min-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dock .names{font-size:14px;color:#F4D9CD;flex:1;min-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dock button{border:1px solid var(--paper);background:none;color:var(--paper);padding:10px 18px;font-weight:600;font-size:14px}
-.dock button.go{background:var(--paper);color:var(--ink)}
-.dock button.go:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.dock button.go{background:var(--paper);color:var(--accent)}
+.dock button.go:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .18s;z-index:50}
+.scrim{position:fixed;inset:0;background:rgba(42,26,22,.6);opacity:0;visibility:hidden;transition:opacity .18s;z-index:50}
 .scrim.on{opacity:1;visibility:visible}
 .sheet{position:fixed;z-index:60;inset:auto 0 0 0;max-height:92vh;overflow-y:auto;background:var(--paper);transform:translateY(100%);transition:transform .24s ease}
 .sheet.on{transform:translateY(0)}
@@ -123,8 +124,8 @@ footer a:hover{color:var(--ink)}
 .rate b{font-family:var(--display);font-size:19px;font-weight:700;display:block;margin-top:3px}
 .book{display:flex;gap:10px;margin:20px 0 0;flex-wrap:wrap}
 .book a,.book button{padding:13px 22px;font-weight:600;font-size:15px;border:1px solid var(--ink);background:none}
-.primary{background:var(--ink);color:var(--paper)}
-.primary:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.primary{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+.primary:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .secondary:hover{background:var(--stone)}
 
 .panel{padding:28px 32px 32px}
@@ -136,7 +137,7 @@ footer a:hover{color:var(--ink)}
 .srow h4{margin:0;font-family:var(--display);font-size:16px;font-weight:700}
 .srow small{color:var(--grey);font-size:13px}
 .srow .drop{margin-left:auto;background:none;border:0;color:var(--grey);font-size:13px;text-decoration:underline}
-.copied{font-size:13px;color:#0E9F5A;font-weight:600;margin:12px 0 0;min-height:18px}
+.copied{font-size:13px;color:var(--green);font-weight:600;margin:12px 0 0;min-height:18px}
 
 @media (max-width:1000px){
   .roster{grid-template-columns:repeat(2,1fr)}
@@ -155,7 +156,6 @@ footer a:hover{color:var(--ink)}
 </style>
 </head>
 <body>
-
 <header>
   <div class="wrap bar">
     <a href="#" class="logo">Goa<i>Baddies</i></a>
